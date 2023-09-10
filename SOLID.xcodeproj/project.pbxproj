@@ -16,6 +16,7 @@
 		3ECCC5F92AA8783D00EE8F15 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCC5F82AA8783D00EE8F15 /* Movie.swift */; };
 		3ECCC5FB2AA8790000EE8F15 /* View+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCC5FA2AA8790000EE8F15 /* View+ViewModel.swift */; };
 		3ECCC5FD2AA8797000EE8F15 /* MoviesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECCC5FC2AA8797000EE8F15 /* MoviesRepository.swift */; };
+		421201572AADF39100297F33 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421201562AADF39100297F33 /* DataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		3ECCC5F82AA8783D00EE8F15 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		3ECCC5FA2AA8790000EE8F15 /* View+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ViewModel.swift"; sourceTree = "<group>"; };
 		3ECCC5FC2AA8797000EE8F15 /* MoviesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRepository.swift; sourceTree = "<group>"; };
+		421201562AADF39100297F33 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				3ECCC5E42AA86EF600EE8F15 /* ViewController.swift */,
 				3ECCC5FA2AA8790000EE8F15 /* View+ViewModel.swift */,
 				3ECCC5FC2AA8797000EE8F15 /* MoviesRepository.swift */,
+				421201562AADF39100297F33 /* DataSource.swift */,
 				3ECCC5F82AA8783D00EE8F15 /* Movie.swift */,
 				3ECCC5E62AA86EF600EE8F15 /* Main.storyboard */,
 				3ECCC5E92AA86EF700EE8F15 /* Assets.xcassets */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				421201572AADF39100297F33 /* DataSource.swift in Sources */,
 				3ECCC5FB2AA8790000EE8F15 /* View+ViewModel.swift in Sources */,
 				3ECCC5E52AA86EF600EE8F15 /* ViewController.swift in Sources */,
 				3ECCC5E12AA86EF600EE8F15 /* AppDelegate.swift in Sources */,

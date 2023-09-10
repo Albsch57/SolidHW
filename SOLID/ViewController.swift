@@ -11,18 +11,34 @@ final class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var viewModel = MoviesListViewModel(tableView: tableView)
-    
-    // Нарушение принципа единственной ответственности (Single Responsibility Principle, SRP)
-    private var currentGenre: Movie.Genre = .all {
-        didSet {
-            chooseGenreButton.title = currentGenre.title.capitalized
-            viewModel.loadMovies(by: currentGenre)
-        }
-    }
-    
+    private lazy var coreDataRepository = MoviesCoreDataRepository()
+    private lazy var networkRepository = MoviesNetworkRepository()
     
     private var chooseGenreButton: UIBarButtonItem! = nil
+    
+ //   private lazy var viewModel = MoviesListViewModel(tableView: tableView)
+    
+//    // Нарушение принципа единственной ответственности (Single Responsibility Principle, SRP)
+//    private var currentGenre: Movie.Genre = .all {
+//        didSet {
+//            chooseGenreButton.title = currentGenre.title.capitalized
+//            viewModel.loadMovies(by: currentGenre)
+//        }
+//    }
+//
+    
+    private lazy var viewModel = MoviesListViewModel(tableView: tableView, repository: coreDataRepository, source: DataSource.coreData)
+    
+    private var currentGenre: Movie.Genre = .all {
+        didSet {
+            updateGenreButtonTitle()
+            viewModel.loadMovies(by: currentGenre, sources: .coreData)
+        }
+    }
+
+    private func updateGenreButtonTitle() {
+        chooseGenreButton.title = currentGenre.title.capitalized
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +48,13 @@ final class ViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         configureUIBarButtonItems()
-        viewModel.loadMovies(by: currentGenre)
+  //      viewModel.loadMovies(by: currentGenre)
+        
+        viewModel.loadMovies(by: currentGenre, sources: .coreData)
+        
+        viewModel.didUpdateMovies = { [unowned self] in
+            tableView.reloadData()
+        }
     }
     
     private func configureUIBarButtonItems() {

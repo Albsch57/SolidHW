@@ -15,43 +15,59 @@ fileprivate var movies = [
     Movie(name: "Матрица", genre: [.action, .sciFi])
 ]
 
-protocol MoviesRepository {
-    func fetchMovies(for genre: Movie.Genre) -> [Movie]
+//protocol MoviesRepository {
+//    func fetchMovies(for genre: Movie.Genre) -> [Movie]
+//    func deleteMovie(_ movie: Movie)
+//
+//    func saveMovie(_ movie: Movie) // Нарушение принципа разделения интерфейса (Interface Segregation Principle, ISP)
+//    func pingToNetwork() -> Bool // Тоже нарушение
+//}
+
+protocol MovieDeletable {
     func deleteMovie(_ movie: Movie)
-    
-    func saveMovie(_ movie: Movie) // Нарушение принципа разделения интерфейса (Interface Segregation Principle, ISP)
-    func pingToNetwork() -> Bool // Тоже нарушение
 }
 
-class BaseRepository {
-    func deleteMovie(_ movie: Movie) {
-        fatalError("This functionality must be implemented by the descendant class")
-    }
+protocol MoviesRepository {
+    func fetchMovies(for genre: Movie.Genre, source: DataSource) -> [Movie]
 }
 
-final class MoviesCoreDataRepository: BaseRepository {
-    func fetchMovies(for genre: Movie.Genre) -> [Movie] {
+protocol MoviesSaving {
+    func saveMovie(_ movie: Movie)
+}
+
+protocol MoviesNetworkPingable {
+    func pingToNetwork() -> Bool
+}
+
+//class BaseRepository {
+//    func deleteMovie(_ movie: Movie) {
+//        fatalError("This functionality must be implemented by the descendant class")
+//    }
+//}
+
+final class MoviesCoreDataRepository: MovieDeletable, MoviesRepository  {
+    func fetchMovies(for genre: Movie.Genre, source: DataSource) -> [Movie] {
         guard genre != .all else { return movies }
         return movies.filter({ $0.genre.contains(genre) })
     }
     
-    override func deleteMovie(_ movie: Movie) {
+    func deleteMovie(_ movie: Movie) {
         if let index = movies.firstIndex(where: { $0 == movie }) {
             movies.remove(at: index)
         }
     }
 }
 
-final class MoviesNetworkRepository: BaseRepository {
-    func fetchMovies(for genre: Movie.Genre) -> [Movie] {
+final class MoviesNetworkRepository: MoviesRepository {
+    func fetchMovies(for genre: Movie.Genre, source: DataSource) -> [Movie] {
         guard genre != .all else { return movies }
         return movies.filter({ $0.genre.contains(genre)})
     }
     
-    override func deleteMovie(_ movie: Movie) {
-        // Empty
-        // Нарушение принципа подстановки Барбары Лисков (Liskov Substitution Principle, LSP)
-        // Тк оставляем пустую реализацию, и в случае использования этого метода у данного класса
-        // Мы сломаем программу.
-    }
+    //    override func deleteMovie(_ movie: Movie) {
+    // Empty
+    // Нарушение принципа подстановки Барбары Лисков (Liskov Substitution Principle, LSP)
+    // Тк оставляем пустую реализацию, и в случае использования этого метода у данного класса
+    // Мы сломаем программу.
+    //    }
 }
